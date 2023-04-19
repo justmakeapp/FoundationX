@@ -7,6 +7,10 @@
 
 import Foundation
 
+#if canImport(SwiftUI)
+    import SwiftUI
+#endif
+
 public func switchTargetEnvironment<R>(
     catalyst: @escaping () -> R,
     nonCatalyst: @escaping () -> R
@@ -17,6 +21,19 @@ public func switchTargetEnvironment<R>(
         return nonCatalyst()
     #endif
 }
+
+#if canImport(SwiftUI)
+    public func switchTargetEnvironment(
+        catalyst: @escaping () -> some View,
+        nonCatalyst: @escaping () -> some View
+    ) -> some View {
+        #if targetEnvironment(macCatalyst)
+            return catalyst()
+        #else
+            return nonCatalyst()
+        #endif
+    }
+#endif
 
 public func onCatalyst(_ callback: @escaping () -> Void) {
     #if targetEnvironment(macCatalyst)
