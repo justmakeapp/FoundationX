@@ -13,7 +13,7 @@
 
 import Foundation
 
-public struct KeyPath {
+public struct DictionaryKeyPath {
     public var segments: [String]
 
     public var isEmpty: Bool { return segments.isEmpty }
@@ -24,23 +24,23 @@ public struct KeyPath {
     /// Strips off the first segment and returns a pair
     /// consisting of the first segment and the remaining key path.
     /// Returns nil if the key path has no segments.
-    public func headAndTail() -> (head: String, tail: KeyPath)? {
+    public func headAndTail() -> (head: String, tail: DictionaryKeyPath)? {
         guard !isEmpty else { return nil }
         var tail = segments
         let head = tail.removeFirst()
-        return (head, KeyPath(segments: tail))
+        return (head, DictionaryKeyPath(segments: tail))
     }
 }
 
 /// Initializes a KeyPath with a string of the form "this.is.a.keypath"
-public extension KeyPath {
+public extension DictionaryKeyPath {
     init(_ string: String) {
         segments = string.components(separatedBy: ".")
     }
 }
 
 /// Initializes a KeyPath with a string of the form "this.is.a.keypath"
-extension KeyPath: ExpressibleByStringLiteral {
+extension DictionaryKeyPath: ExpressibleByStringLiteral {
     public init(stringLiteral value: String) {
         self.init(value)
     }
@@ -55,7 +55,7 @@ extension KeyPath: ExpressibleByStringLiteral {
 }
 
 public extension Dictionary where Key == String {
-    subscript(keyPath keyPath: KeyPath) -> Any? {
+    subscript(keyPath keyPath: DictionaryKeyPath) -> Any? {
         get {
             switch keyPath.headAndTail() {
             case nil:
