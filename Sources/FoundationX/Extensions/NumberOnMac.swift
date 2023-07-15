@@ -16,8 +16,8 @@ public extension CGFloat {
         #endif
     }
 
-    func onMacCatalyst(_ value: CGFloat) -> CGFloat {
-        #if targetEnvironment(macCatalyst)
+    func onMac(_ value: CGFloat) -> CGFloat {
+        #if targetEnvironment(macCatalyst) || os(macOS)
             return value
         #else
             return self
@@ -34,8 +34,8 @@ public extension Int {
         #endif
     }
 
-    func onMacCatalyst(_ value: Int) -> Int {
-        #if targetEnvironment(macCatalyst)
+    func onMac(_ value: Int) -> Int {
+        #if targetEnvironment(macCatalyst) || os(macOS)
             return value
         #else
             return self
@@ -52,8 +52,8 @@ public extension Double {
         #endif
     }
 
-    func onMacCatalyst(_ value: Double) -> Double {
-        #if targetEnvironment(macCatalyst)
+    func onMac(_ value: Double) -> Double {
+        #if targetEnvironment(macCatalyst) || os(macOS)
             return value
         #else
             return self
