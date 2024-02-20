@@ -31,7 +31,7 @@ public extension CustomSortDescriptor {
 }
 
 public extension Sequence {
-    @available(iOS 15.0, *)
+    @available(iOS 15.0, macOS 12.0, *)
     func sorted(
         using descriptors: [CustomSortDescriptor<Element>],
         order: SortOrder
@@ -60,7 +60,7 @@ public extension Sequence {
         }
     }
 
-    @available(iOS 15.0, *)
+    @available(iOS 15.0, macOS 12.0, *)
     func sorted(using descriptors: CustomSortDescriptor<Element>...) -> [Element] {
         sorted(using: descriptors, order: .forward)
     }
