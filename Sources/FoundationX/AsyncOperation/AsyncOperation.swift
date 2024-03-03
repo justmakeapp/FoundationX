@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// https://www.avanderlee.com/swift/asynchronous-operations/
 open class AsyncOperation: Operation {
     private let lockQueue = DispatchQueue(label: "me.loopapp.asyncoperation", attributes: .concurrent)
 
