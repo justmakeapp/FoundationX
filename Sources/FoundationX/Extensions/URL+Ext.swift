@@ -13,4 +13,14 @@ public extension URL {
     var mimeType: String {
         return UTType(filenameExtension: pathExtension)?.preferredMIMEType ?? "application/octet-stream"
     }
+
+    var fileSize: Int64 {
+        do {
+            let resources = try resourceValues(forKeys: [.fileSizeKey])
+            return Int64(resources.fileSize ?? 0)
+        } catch {
+            print(error)
+            return 0
+        }
+    }
 }
