@@ -10,8 +10,25 @@ import UniformTypeIdentifiers
 
 public extension URL {
     @available(iOS 14.0, *)
+    var utType: UTType? {
+        let fallback = UTType(filenameExtension: pathExtension)
+        do {
+            guard
+                let typeID = try resourceValues(forKeys: [.typeIdentifierKey]).typeIdentifier,
+                let utType = UTType(typeID)
+            else {
+                return fallback
+            }
+            return utType
+        } catch {
+            debugPrint(error)
+            return fallback
+        }
+    }
+
+    @available(iOS 14.0, *)
     var mimeType: String {
-        return UTType(filenameExtension: pathExtension)?.preferredMIMEType ?? "application/octet-stream"
+        return utType?.preferredMIMEType ?? "application/octet-stream"
     }
 
     var fileSize: Int64 {
