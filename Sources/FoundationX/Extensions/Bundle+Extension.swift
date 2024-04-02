@@ -17,4 +17,11 @@ public extension Bundle {
     var buildString: String? {
         return object(forInfoDictionaryKey: "CFBundleVersion") as? String
     }
+
+    /// Application name shown under the application icon.
+    var applicationName: String? {
+        let cfBundleDisplayName = object(forInfoDictionaryKey: "CFBundleDisplayName") as? String
+        let CFBundleName = object(forInfoDictionaryKey: "CFBundleName") as? String
+        return cfBundleDisplayName ?? CFBundleName
+    }
 }
