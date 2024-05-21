@@ -10,15 +10,16 @@ import Foundation
 public struct L10nValue: Decodable, Equatable {
     public let key: String?
     public let tableName: String?
+    public let bundle: String?
     public let args: [CVarArg]?
     public let fallback: String
 
-    public func asString(_ bundle: Bundle) -> String {
+    public func asString(_ withBundle: (_ bundleString: String?) -> Bundle) -> String {
         if let key {
             let format = NSLocalizedString(
                 key,
                 tableName: tableName,
-                bundle: bundle,
+                bundle: withBundle(bundle),
                 value: fallback,
                 comment: ""
             )
@@ -30,6 +31,7 @@ public struct L10nValue: Decodable, Equatable {
     enum CodingKeys: String, CodingKey {
         case key
         case tableName
+        case bundle
         case args
         case fallback
     }
@@ -37,11 +39,13 @@ public struct L10nValue: Decodable, Equatable {
     public init(
         key: String?,
         tableName: String?,
+        bundle: String?,
         args: [CVarArg],
         fallback: String
     ) {
         self.key = key
         self.tableName = tableName
+        self.bundle = bundle
         self.args = args
         self.fallback = fallback
     }
@@ -49,7 +53,11 @@ public struct L10nValue: Decodable, Equatable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.key = try container.decodeIfPresent(String.self, forKey: .key)
+
         self.tableName = try container.decodeIfPresent(String.self, forKey: .tableName)
+
+        self.bundle = try container.decodeIfPresent(String.self, forKey: .bundle)
+
         if let fallback = try container.decodeIfPresent(String.self, forKey: .fallback) {
             self.fallback = fallback
         } else {
