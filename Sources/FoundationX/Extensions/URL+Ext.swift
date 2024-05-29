@@ -40,4 +40,21 @@ public extension URL {
             return 0
         }
     }
+
+    /// https://stackoverflow.com/a/49072718
+    var isValid: Bool {
+        guard let detector = try? NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue) else {
+            return false
+        }
+        let length = absoluteString.utf16.count
+        if let match = detector.firstMatch(
+            in: absoluteString,
+            options: [],
+            range: NSRange(location: 0, length: length)
+        ) {
+            return match.range.length == length
+        } else {
+            return false
+        }
+    }
 }
