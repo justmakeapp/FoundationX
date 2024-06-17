@@ -16,5 +16,6 @@ public protocol AsyncCommand: Command {
 }
 
 public protocol ThrowableAsyncCommand: Command {
+    @discardableResult
     func execute() async throws -> Bool
 }
