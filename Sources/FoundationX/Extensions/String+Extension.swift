@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension String: LocalizedError {
+extension String: Foundation.LocalizedError {
     // can throw string as error
     public var errorDescription: String? { return self }
 }

@@ -7,7 +7,8 @@
 
 import Foundation
 
-open class ChainedAsyncResultOperation<Input, Output, Failure>: AsyncResultOperation<Output, Failure>
+open class ChainedAsyncResultOperation<Input, Output, Failure>: AsyncResultOperation<Output, Failure>,
+    @unchecked Sendable
     where Failure: Swift.Error {
     public private(set) var input: Input?
 
