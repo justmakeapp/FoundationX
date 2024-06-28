@@ -7,11 +7,11 @@
 
 import Foundation
 
-public struct L10nValue: Decodable, Equatable {
+public struct L10nValue: Decodable, Equatable, Sendable {
     public let key: String?
     public let tableName: String?
     public let bundle: String?
-    public let args: [CVarArg]?
+    private let args: [UncheckedSendable<CVarArg>]?
     public let fallback: String
 
     public func asString(_ withBundle: (_ bundleString: String?) -> Bundle) -> String {
@@ -23,7 +23,8 @@ public struct L10nValue: Decodable, Equatable {
                 value: fallback,
                 comment: ""
             )
-            return String(format: format, locale: Locale.current, arguments: args ?? [])
+            let arguments: [any CVarArg] = (args ?? []).map(\.wrappedValue)
+            return String(format: format, locale: Locale.current, arguments: arguments)
         }
         return fallback
     }
@@ -46,7 +47,7 @@ public struct L10nValue: Decodable, Equatable {
         self.key = key
         self.tableName = tableName
         self.bundle = bundle
-        self.args = args
+        self.args = args.map { UncheckedSendable($0) }
         self.fallback = fallback
     }
 
@@ -87,7 +88,7 @@ public struct L10nValue: Decodable, Equatable {
                 }
             }
 
-            self.args = args
+            self.args = args.map { UncheckedSendable($0) }
         } else {
             self.args = []
         }
