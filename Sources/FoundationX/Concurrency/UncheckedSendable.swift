@@ -7,9 +7,9 @@
 
 import Foundation
 
-struct UncheckedSendable<Value>: @unchecked Sendable {
-    var wrappedValue: Value
-    init(_ value: Value) {
+public struct UncheckedSendable<Value>: @unchecked Sendable {
+    public var wrappedValue: Value
+    public init(_ value: Value) {
         self.wrappedValue = value
     }
 
