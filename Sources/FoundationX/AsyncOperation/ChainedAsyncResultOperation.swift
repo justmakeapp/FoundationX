@@ -9,7 +9,8 @@ import Foundation
 
 open class ChainedAsyncResultOperation<Input, Output, Failure>: AsyncResultOperation<Output, Failure>,
     @unchecked Sendable
-    where Failure: Swift.Error {
+    where Failure: Swift.Error
+{
     public private(set) var input: Input?
 
     public init(input: Input? = nil) {

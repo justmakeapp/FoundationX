@@ -53,18 +53,18 @@ public struct L10nValue: Decodable, Equatable, Sendable {
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.key = try container.decodeIfPresent(String.self, forKey: .key)
+        key = try container.decodeIfPresent(String.self, forKey: .key)
 
-        self.tableName = try container.decodeIfPresent(String.self, forKey: .tableName)
+        tableName = try container.decodeIfPresent(String.self, forKey: .tableName)
 
-        self.bundle = try container.decodeIfPresent(String.self, forKey: .bundle)
+        bundle = try container.decodeIfPresent(String.self, forKey: .bundle)
 
         if let fallback = try container.decodeIfPresent(String.self, forKey: .fallback) {
             self.fallback = fallback
         } else {
             throw NSError(
                 domain: "",
-                code: 1_000,
+                code: 1000,
                 userInfo: [NSLocalizedDescriptionKey: "Can not decode fallback property"]
             )
         }
@@ -90,7 +90,7 @@ public struct L10nValue: Decodable, Equatable, Sendable {
 
             self.args = args.map { UncheckedSendable($0) }
         } else {
-            self.args = []
+            args = []
         }
     }
 
