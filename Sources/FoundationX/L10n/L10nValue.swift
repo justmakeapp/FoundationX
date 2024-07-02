@@ -64,7 +64,7 @@ public struct L10nValue: Decodable, Equatable, Sendable {
         } else {
             throw NSError(
                 domain: "",
-                code: 1000,
+                code: 1_000,
                 userInfo: [NSLocalizedDescriptionKey: "Can not decode fallback property"]
             )
         }
