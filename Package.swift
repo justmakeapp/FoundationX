@@ -5,7 +5,7 @@ import PackageDescription
 let package = Package(
     name: "FoundationX",
     platforms: [
-        .iOS(.v13),
+        .iOS(.v14),
         .macOS(.v11),
         .watchOS(.v9),
         .visionOS(.v1),
