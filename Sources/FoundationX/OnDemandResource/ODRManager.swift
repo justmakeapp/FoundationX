@@ -9,34 +9,36 @@
 import Foundation
 import os
 
-public final class ODRManager {
-    public var bundle: Bundle? {
-        currentRequest?.bundle
-    }
+#if os(iOS)
+    public final class ODRManager {
+        public var bundle: Bundle? {
+            currentRequest?.bundle
+        }
 
-    private(set) var currentRequest: NSBundleResourceRequest?
+        private(set) var currentRequest: NSBundleResourceRequest?
 
-    private let logger = Logger(
-        subsystem: Bundle.main.bundleIdentifier!,
-        category: String(describing: ODRManager.self)
-    )
+        private let logger = Logger(
+            subsystem: Bundle.main.bundleIdentifier!,
+            category: String(describing: ODRManager.self)
+        )
 
-    public init() {}
+        public init() {}
 
-    public func loadOnDemandResources(tags: Set<String>) async throws {
-        let resourceRequest = NSBundleResourceRequest(tags: tags)
-        currentRequest = resourceRequest
+        public func loadOnDemandResources(tags: Set<String>) async throws {
+            let resourceRequest = NSBundleResourceRequest(tags: tags)
+            currentRequest = resourceRequest
 
-        /// Use conditionallyBeginAccessingResources to check resource availability
-        /// grants access if the tags are already on the device.
-        let available = await resourceRequest.conditionallyBeginAccessingResources()
-        logger.log("Resources are available: \(available)")
+            /// Use conditionallyBeginAccessingResources to check resource availability
+            /// grants access if the tags are already on the device.
+            let available = await resourceRequest.conditionallyBeginAccessingResources()
+            logger.log("Resources are available: \(available)")
 
-        if !available {
-            /// If the tags (resources) are not on the device,
-            /// the app needs to call beginAccessingResourcesWithCompletionHandler to download them.
-            try await resourceRequest.beginAccessingResources()
-            logger.log("Resources are downloaded")
+            if !available {
+                /// If the tags (resources) are not on the device,
+                /// the app needs to call beginAccessingResourcesWithCompletionHandler to download them.
+                try await resourceRequest.beginAccessingResources()
+                logger.log("Resources are downloaded")
+            }
         }
     }
-}
+#endif
