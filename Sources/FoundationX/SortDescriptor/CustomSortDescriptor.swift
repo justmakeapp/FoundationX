@@ -61,7 +61,10 @@ public extension Sequence {
     }
 
     @available(iOS 15.0, macOS 12.0, *)
-    func sorted(using descriptors: CustomSortDescriptor<Element>...) -> [Element] {
-        sorted(using: descriptors, order: .forward)
+    func sorted(
+        using descriptors: CustomSortDescriptor<Element>...,
+        order: SortOrder = .forward
+    ) -> [Element] {
+        sorted(using: descriptors, order: order)
     }
 }
