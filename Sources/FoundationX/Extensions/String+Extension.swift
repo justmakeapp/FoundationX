@@ -34,4 +34,36 @@ public extension String {
             return false
         }
     }
+
+    // https://sarunw.com/posts/how-to-compare-two-app-version-strings-in-swift/
+    func versionCompare(_ otherVersion: String) -> ComparisonResult {
+        let versionDelimiter = "."
+
+        var versionComponents = self.components(separatedBy: versionDelimiter)
+        var otherVersionComponents = otherVersion.components(separatedBy: versionDelimiter)
+
+        // Then, we find the difference of digit that we will zero pad.
+        let zeroDiff = versionComponents.count - otherVersionComponents.count
+
+        // If there are no differences, we don't need to do anything and use simple .compare
+        if zeroDiff == 0 {
+            // Same format, compare normally
+            return self.compare(otherVersion, options: .numeric)
+        } else {
+            // We populate an array of missing zero.
+            let zeros = Array(repeating: "0", count: abs(zeroDiff))
+            if zeroDiff > 0 {
+                // We add zero pad array to a version with a fewer period and zero.
+                otherVersionComponents.append(contentsOf: zeros)
+            } else {
+                versionComponents.append(contentsOf: zeros)
+            }
+            return versionComponents.joined(separator: versionDelimiter)
+                // We user array components to build back our versions from components and compare them. This time it
+                // will have the same period and number of digit.
+                .compare(
+                    otherVersionComponents.joined(separator: versionDelimiter), options: .numeric
+                )
+        }
+    }
 }
