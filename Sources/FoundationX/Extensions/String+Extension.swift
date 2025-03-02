@@ -6,7 +6,9 @@
 //
 
 import Foundation
-
+#if canImport(NaturalLanguage)
+    import NaturalLanguage
+#endif
 extension String: Foundation.LocalizedError {
     // can throw string as error
     public var errorDescription: String? { return self }
@@ -19,6 +21,17 @@ public extension String {
         return regex.firstMatch(in: lhs, options: [], range: range) != nil
     }
 }
+
+#if canImport(NaturalLanguage)
+
+    public extension String {
+        func splitIntoWords() -> [String] {
+            let tokenizer = NLTokenizer(unit: .word)
+            tokenizer.string = self
+            return tokenizer.tokens(for: startIndex ..< endIndex).map { String(self[$0]) }
+        }
+    }
+#endif
 
 public extension String {
     var isValidURL: Bool {
