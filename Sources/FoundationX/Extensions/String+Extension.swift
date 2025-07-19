@@ -34,6 +34,10 @@ public extension String {
 #endif
 
 public extension String {
+    var containsDigits: Bool {
+        return rangeOfCharacter(from: CharacterSet.decimalDigits) != nil
+    }
+
     var isValidURL: Bool {
         let detector = try! NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
         if let match = detector.firstMatch(
