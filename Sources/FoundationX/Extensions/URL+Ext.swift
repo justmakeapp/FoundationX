@@ -57,4 +57,13 @@ public extension URL {
             return false
         }
     }
+
+    func filename(withExtension: Bool = true) -> String {
+        let url = withExtension ? self : self.deletingPathExtension()
+        if #available(iOS 16.0, macOS 13.0, *) {
+            return (url.path(percentEncoded: false) as NSString).lastPathComponent
+        } else {
+            return (url.path as NSString).lastPathComponent
+        }
+    }
 }
