@@ -9,6 +9,8 @@ import Foundation
 #if canImport(NaturalLanguage)
     import NaturalLanguage
 #endif
+
+extension String: @retroactive Error {}
 extension String: Foundation.LocalizedError {
     // can throw string as error
     public var errorDescription: String? { return self }
