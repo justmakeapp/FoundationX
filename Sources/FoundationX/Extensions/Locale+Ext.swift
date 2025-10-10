@@ -22,4 +22,25 @@ public extension Locale.Weekday {
             return 1 // Default to Sunday if unknown
         }
     }
+
+    init(from weekdayNumber: Int) {
+        switch weekdayNumber {
+        case 1:
+            self = .sunday
+        case 2:
+            self = .monday
+        case 3:
+            self = .tuesday
+        case 4:
+            self = .wednesday
+        case 5:
+            self = .thursday
+        case 6:
+            self = .friday
+        case 7:
+            self = .saturday
+        default:
+            self = .sunday
+        }
+    }
 }
