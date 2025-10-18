@@ -7,6 +7,13 @@
 
 import Foundation
 import UniformTypeIdentifiers
+#if canImport(UIKit)
+    import UIKit
+#endif
+
+#if canImport(AppKit)
+    import AppKit
+#endif
 
 public extension URL {
     @available(iOS 14.0, *)
@@ -65,5 +72,24 @@ public extension URL {
         } else {
             return (url.path as NSString).lastPathComponent
         }
+    }
+
+    @MainActor
+    func open() async -> Bool {
+        #if os(watchOS)
+            return false
+        #endif
+        #if os(iOS) && canImport(UIKit)
+            let canOpen = UIApplication.shared.canOpenURL(self)
+            if canOpen {
+                await UIApplication.shared.open(self)
+            }
+
+            return canOpen
+        #endif
+
+        #if os(macOS)
+            return NSWorkspace.shared.open(self)
+        #endif
     }
 }
