@@ -16,7 +16,10 @@ import Foundation
 public struct DictionaryKeyPath {
     public var segments: [String]
 
-    public var isEmpty: Bool { return segments.isEmpty }
+    public var isEmpty: Bool {
+        return segments.isEmpty
+    }
+
     public var path: String {
         return segments.joined(separator: ".")
     }

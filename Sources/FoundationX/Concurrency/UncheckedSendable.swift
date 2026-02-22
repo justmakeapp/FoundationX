@@ -13,5 +13,7 @@ public struct UncheckedSendable<Value>: @unchecked Sendable {
         wrappedValue = value
     }
 
-    public var projectedValue: Self { self }
+    public var projectedValue: Self {
+        self
+    }
 }

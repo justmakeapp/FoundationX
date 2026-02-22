@@ -7,7 +7,7 @@
 
 import Foundation
 
-open class AsyncResultOperation<Success, Failure>: AsyncOperation, @unchecked Sendable where Failure: Error {
+open class AsyncResultOperation<Success, Failure: Error>: AsyncOperation, @unchecked Sendable {
     public private(set) var result: Result<Success, Failure>! {
         didSet {
             onResult?(result)

@@ -59,7 +59,7 @@ open class AsyncOperation: Operation, @unchecked Sendable {
     }
 
     override open func main() {
-        /// Use a dispatch after to mimic the scenario of a long-running task.
+        // Use a dispatch after to mimic the scenario of a long-running task.
         DispatchQueue.global().asyncAfter(deadline: DispatchTime.now() + DispatchTimeInterval.seconds(1)) {
             print("Executing")
             self.finish()

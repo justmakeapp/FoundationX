@@ -12,8 +12,10 @@ import Foundation
 
 extension String: @retroactive Error {}
 extension String: Foundation.LocalizedError {
-    // can throw string as error
-    public var errorDescription: String? { return self }
+    /// can throw string as error
+    public var errorDescription: String? {
+        return self
+    }
 }
 
 public extension String {
@@ -54,7 +56,7 @@ public extension String {
         }
     }
 
-    // https://sarunw.com/posts/how-to-compare-two-app-version-strings-in-swift/
+    /// https://sarunw.com/posts/how-to-compare-two-app-version-strings-in-swift/
     func versionCompare(_ otherVersion: String) -> ComparisonResult {
         let versionDelimiter = "."
 

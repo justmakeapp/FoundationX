@@ -28,14 +28,14 @@ import os
             let resourceRequest = NSBundleResourceRequest(tags: tags)
             currentRequest = resourceRequest
 
-            /// Use conditionallyBeginAccessingResources to check resource availability
-            /// grants access if the tags are already on the device.
+            // Use conditionallyBeginAccessingResources to check resource availability
+            // grants access if the tags are already on the device.
             let available = await resourceRequest.conditionallyBeginAccessingResources()
             logger.log("Resources are available: \(available)")
 
             if !available {
-                /// If the tags (resources) are not on the device,
-                /// the app needs to call beginAccessingResourcesWithCompletionHandler to download them.
+                // If the tags (resources) are not on the device,
+                // the app needs to call beginAccessingResourcesWithCompletionHandler to download them.
                 try await resourceRequest.beginAccessingResources()
                 logger.log("Resources are downloaded")
             }
